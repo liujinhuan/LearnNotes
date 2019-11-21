@@ -43,10 +43,10 @@ define(function(require,exports,module){
 exports.hello = function(){
     console.log("hello")
 }
-function foo(){
-    lib.log("foo")
+
+exports default function (){
+    console.log("hello")
 }
-exports default foo
 ```
 
 ### ES6特性
