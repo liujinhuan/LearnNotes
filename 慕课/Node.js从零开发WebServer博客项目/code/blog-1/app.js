@@ -2,21 +2,22 @@ const handleBlog = require("./src/router/blog")
 const handleUser = require("./src/router/user")
 const  querystring = require("querystring")
 
-const getPostData =  (req)=>{
+const getPostData = (req)=>{
     const promise = new Promise((resolve,reject)=>{
-        if(req.method!="POST"){
+        console.log(req.headers)
+        if(req.method!=="POST"){
             resolve({})
             return 
         }
 
-        if(req.headers['Content-Type']!="application/json"){
+        if(req.headers['content-type']!=="application/json"){
             resolve({})
             return 
         }
 
         let postdata = ''
         req.on("data",chunk=>{
-            postdata+=chunk.toString()
+            postdata += chunk.toString()
         })
         req.on("end",()=>{
             if(!postdata){
@@ -40,6 +41,7 @@ const serverHandle = (req,res)=>{
     req.query = querystring.parse(url.split("?")[1])
     // 处理body
     getPostData(req).then((postdata)=>{
+        console.log("postdata---",postdata)
         req.body = postdata
         const blog = handleBlog(req,res)
         if(blog){

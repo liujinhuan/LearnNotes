@@ -22,7 +22,24 @@ const getDetail = (id)=>{
     }
 }
 
+const updateBlog = (id,blog={}) =>{
+    return true
+}
+
+const deleteBlog = (id) =>{
+    return false
+}
+
+const newBlog = (blog={}) =>{
+    return {
+        id:4
+    }
+}
+
 module.exports = {
     getList,
-    getDetail
+    getDetail,
+    updateBlog,
+    newBlog,
+    deleteBlog
 }
