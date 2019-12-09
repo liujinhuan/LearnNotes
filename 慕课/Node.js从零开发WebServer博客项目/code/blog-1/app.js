@@ -1,10 +1,11 @@
 const handleBlog = require("./src/router/blog")
 const handleUser = require("./src/router/user")
+const {access} = require("./src/utils/log")
 const  querystring = require("querystring")
 
 const getPostData = (req)=>{
     const promise = new Promise((resolve,reject)=>{
-        console.log(req.headers)
+        // console.log(req.headers)
         if(req.method!=="POST"){
             resolve({})
             return 
@@ -33,6 +34,8 @@ const getPostData = (req)=>{
 
 
 const serverHandle = (req,res)=>{
+    // 记录日志
+    access(`${req.method} -- ${req.url} -- ${req.headers['user-agent']} -- ${Date.now()}`)
     res.setHeader("Content-Type","application/json")
     // 提取path
     const url = req.url
