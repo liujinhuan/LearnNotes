@@ -1,4 +1,4 @@
-const express =  require("express")
+const express =  require("../express/like-express")
 
 const  app = express()
 
@@ -59,15 +59,16 @@ app.post('/api/get-post-data',(req,res,next)=>{
     })
 })
 
+// 自定义的这个express、会导致这里404有问题，取消注释的话，就都是404啦
 // 404
-app.use((req,res,next)=>{
-    console.log("处理404")
-    res.json({
-        errno:-1,
-        msg:'404 not found'
-    })
-})
+// app.use((req,res,next)=>{
+//     console.log("处理404")
+//     res.json({
+//         errno:-1,
+//         msg:'404 not found'
+//     })
+// })
 
-app.listen(3001,()=>{
+app.listen(3002,()=>{
     console.log("server is running...")
 })
