@@ -141,3 +141,115 @@ function throttle(func, wait, options) {
     return throttled;
 }
 ```
+
+## 数组去重
+
+
+```js
+// array：表示要去重的数组，必填
+// isSorted：表示函数传入的数组是否已排过序，如果为 true，将会采用更快的方法进行去重
+// iteratee：传入一个函数，可以对每个元素进行重新的计算，然后根据处理的结果进行去重
+var array3 = [1, 1, 'a', 'A', 2, 2];
+
+// 第二版
+// iteratee 英文释义：迭代 重复
+function unique(array, isSorted, iteratee) {
+    var res = [];
+    var seen = [];
+
+    for (var i = 0, len = array.length; i < len; i++) {
+        var value = array[i];
+        var computed = iteratee ? iteratee(value, i, array) : value;
+        if (isSorted) {
+            if (!i || seen !== computed) {
+                res.push(value)
+            }
+            seen = computed;
+        }
+        else if (iteratee) {
+            if (seen.indexOf(computed) === -1) {
+                seen.push(computed);
+                res.push(value);
+            }
+        }
+        else if (res.indexOf(value) === -1) {
+            res.push(value);
+        }        
+    }
+    return res;
+}
+
+console.log(unique(array3, false, function(item){
+    return typeof item == 'string' ? item.toLowerCase() : item
+})); // [1, "a", 2]
+```
+
+## 类型判断
+
++ typeof
+    + 在 ES6 前，JavaScript 共六种数据类型，分别是：Undefined、Null、Boolean、Number、String、Object
+    + typeof 对这些数据类型的值进行操作，结果分别是：undefined、object、boolean、number、string、object
+    + Null 和 Object 类型都返回了 object 字符串。
+    + 但是 typeof 却能检测出函数类型。
+    + 但是 Object 下还有很多细分的类型呐，如 Array、Function、Date、RegExp、Error ，所以有没有更好的方法呢？
+    + 是的，当然有！这就是 Object.prototype.toString！
+
++ Object.prototype.toString！可以识别至少 14 种类型
++ 写一个 type 函数能检测各种类型的值，如果是基本类型，就使用 typeof，引用类型就使用 toString。此外鉴于 typeof 的结果是小写，我也希望所有的结果都是小写。
+
+```js
+// 第二版
+var class2type = {};
+
+// 生成class2type映射
+"Boolean Number String Function Array Date RegExp Object Error".split(" ").map(function(item, index) {
+    class2type["[object " + item + "]"] = item.toLowerCase();
+})
+
+function type(obj) {
+    // 一箭双雕
+    if (obj == null) {
+        return obj + "";
+    }
+    return typeof obj === "object" || typeof obj === "function" ?
+        class2type[Object.prototype.toString.call(obj)] || "object" :
+        typeof obj;
+}
+```
+
+## 深浅拷贝
++ 复制引用的拷贝方法称之为浅拷贝，与之对应的就是深拷贝，深拷贝就是指完全的拷贝一个对象，即使嵌套了对象，两者也相互分离，修改一个对象的属性，也不会影响另一个
++ concat 和 slice 是一种浅拷贝
++ JSON.parse( JSON.stringify(arr) )可以实现数组的深拷贝，但是不能拷贝函数
++ 如何实现一个对象或者数组的浅拷贝
+
+```js
+var shallowCopy = function(obj) {
+    // 只拷贝对象
+    if (typeof obj !== 'object') return;
+    // 根据obj的类型判断是新建一个数组还是对象
+    var newObj = obj instanceof Array ? [] : {};
+    // 遍历obj，并且判断是obj的属性才拷贝
+    for (var key in obj) {
+        if (obj.hasOwnProperty(key)) {
+            newObj[key] = obj[key];
+        }
+    }
+    return newObj;
+}
+```
+
++ 如何实现一个深拷贝呢？我们在拷贝的时候判断一下属性值的类型，如果是对象，我们递归调用深拷贝函数不就好了~
+
+```js
+var deepCopy = function(obj) {
+    if (typeof obj !== 'object') return;
+    var newObj = obj instanceof Array ? [] : {};
+    for (var key in obj) {
+        if (obj.hasOwnProperty(key)) {
+            newObj[key] = typeof obj[key] === 'object' ? deepCopy(obj[key]) : obj[key];
+        }
+    }
+    return newObj;
+}
+```
