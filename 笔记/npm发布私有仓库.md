@@ -16,11 +16,11 @@ sudo npm install verdaccio -g
 
 + 安装完成后，命令行直接输入`verdaccio`命令即可运行
 
-![执行verdaccio](https://raw.githubusercontent.com/liujinhuan/LearnNotes/master/imgs/执行verdaccio.png)
+![执行verdaccio](https://raw.githubusercontent.com/liujinhuan/LearnNotes/master/imgs/npm/执行verdaccio.png)
 
 + 这时候浏览器打开`http://localhost:4873`，如果未发布过包，则会见到如下所示的图
 
-![未发布包的服务](https://raw.githubusercontent.com/liujinhuan/LearnNotes/master/imgs/未发布包的服务.png)
+![未发布包的服务](https://raw.githubusercontent.com/liujinhuan/LearnNotes/master/imgs/npm/未发布包的服务.png)
 
 + 将当前npm指向本地
 
@@ -54,9 +54,9 @@ npm publish
 // 期间可能会遇到提示未登录的错误信息，重新登录下即可，输入userName 和 password 和 email
 npm login –registry http://localhost:4873
 ```
-![发布成功](https://raw.githubusercontent.com/liujinhuan/LearnNotes/master/imgs/发布成功.png)
+![发布成功](https://raw.githubusercontent.com/liujinhuan/LearnNotes/master/imgs/npm/发布成功.png)
 
-![发布成功后服务器中显示的包](https://raw.githubusercontent.com/liujinhuan/LearnNotes/master/imgs/发布成功后服务器中显示的包.png)
+![发布成功后服务器中显示的包](https://raw.githubusercontent.com/liujinhuan/LearnNotes/master/imgs/npm/发布成功后服务器中显示的包.png)
 
 + 如何使用呢？编写测试文件
 
@@ -73,13 +73,14 @@ var f = require('npmtest')
 node index.js
 ```
 
-![测试成功](https://raw.githubusercontent.com/liujinhuan/LearnNotes/master/imgs/测试成功.png)
+![测试成功](https://raw.githubusercontent.com/liujinhuan/LearnNotes/master/imgs/npm/测试成功.png)
 
 + 至此一个包就发布成功啦。。。
 
 ### 参考
 
 [如何搭建一个私有 npm 服务器](http://auan.cn/internet/2010.html)
+
 [一分钟教你发布npm包](https://www.jianshu.com/p/7bba18925fbf)
 
 
