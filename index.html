@@ -1,0 +1,32 @@
+/* 1. 设置一个透视变换，相机距离图像的距离 */
+/* perspective : 500px */
+/* 2. 设置视觉查看的样式 */
+/* transform-style : perspective-3d */
+/* 3. 变换图像 */
+/* transform : translate rotate */
+
+
+/*旋转的硬币效果*/
+.money {
+    width: 100px;
+    height: 100px;
+    border-radius: 50px;
+    background-color: #48adff;
+    border: 2px solid #000;
+
+    /*开启3D效果*/
+
+    perspective: 500px;
+    transform-style: preserve-3d;
+    /*transform : rotateY(180deg);*/
+    animation : rotate 2s linear infinite;
+}
+
+@keyframes rotate {
+    from {
+        transform : rotateY(0deg);
+    }
+    to {
+        transform : rotateY(360deg);
+    }
+}
